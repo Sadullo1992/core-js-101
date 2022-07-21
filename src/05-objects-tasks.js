@@ -20,8 +20,12 @@
  *    console.log(r.height);      // => 20
  *    console.log(r.getArea());   // => 200
  */
-function Rectangle(/* width, height */) {
-  throw new Error('Not implemented');
+function Rectangle(width, height) {
+  this.width = width;
+  this.height = height;
+  this.getArea = function getArea() {
+    return this.width * this.height;
+  };
 }
 
 
@@ -35,8 +39,8 @@ function Rectangle(/* width, height */) {
  *    [1,2,3]   =>  '[1,2,3]'
  *    { width: 10, height : 20 } => '{"height":10,"width":20}'
  */
-function getJSON(/* obj */) {
-  throw new Error('Not implemented');
+function getJSON(obj) {
+  return JSON.stringify(obj);
 }
 
 
@@ -51,8 +55,9 @@ function getJSON(/* obj */) {
  *    const r = fromJSON(Circle.prototype, '{"radius":10}');
  *
  */
-function fromJSON(/* proto, json */) {
-  throw new Error('Not implemented');
+function fromJSON(proto, json) {
+  const obj = JSON.parse(json);
+  return Object.setPrototypeOf(obj, proto);
 }
 
 
@@ -110,6 +115,58 @@ function fromJSON(/* proto, json */) {
  *  For more examples see unit tests.
  */
 
+// const cssSelectorBuilder = {
+//   str: '',
+
+//   element(value) {
+//     const obj = Object.create(cssSelectorBuilder);
+//     obj.str = `${this.str}${value}`;
+//     return obj;
+//   },
+
+//   id(value) {
+//     const obj = Object.create(cssSelectorBuilder);
+//     obj.str = `${this.str}#${value}`;
+//     return obj;
+//   },
+
+//   class(value) {
+//     const obj = Object.create(cssSelectorBuilder);
+//     obj.str = `${this.str}.${value}`;
+//     return obj;
+//   },
+
+//   attr(value) {
+//     const obj = Object.create(cssSelectorBuilder);
+//     obj.str = `${this.str}[${value}]`;
+//     return obj;
+//   },
+
+//   pseudoClass(value) {
+//     const obj = Object.create(cssSelectorBuilder);
+//     obj.str = `${this.str}:${value}`;
+//     return obj;
+//   },
+
+//   pseudoElement(value) {
+//     const obj = Object.create(cssSelectorBuilder);
+//     obj.str = `${this.str}::${value}`;
+//     return obj;
+//   },
+
+//   combine(selector1, combinator, selector2) {
+//     const obj = Object.create(cssSelectorBuilder);
+//     const select1 = selector1.stringify();
+//     const select2 = selector2.stringify();
+//     obj.str = `${select1} ${combinator} ${select2}`;
+//     return obj;
+//   },
+
+//   stringify() {
+//     return this.str;
+//   },
+// };
+
 const cssSelectorBuilder = {
   element(/* value */) {
     throw new Error('Not implemented');
@@ -139,7 +196,6 @@ const cssSelectorBuilder = {
     throw new Error('Not implemented');
   },
 };
-
 
 module.exports = {
   Rectangle,
