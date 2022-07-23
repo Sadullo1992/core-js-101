@@ -14,7 +14,7 @@
  * if is not boolean value passed
  *
  * @param {boolean} isPositiveAnswer
- * @return {Promise}
+ *  {Promise}
  *
  * @example
  *    const p1 = willYouMarryMe(true);
@@ -28,8 +28,18 @@
  *      .catch((error) => console.log(error.message)) // 'Error: Wrong parameter is passed!
  *                                                    //  Ask her again.';
  */
-function willYouMarryMe(/* isPositiveAnswer */) {
-  throw new Error('Not implemented');
+function willYouMarryMe(isPositiveAnswer) {
+  const promise = new Promise((resolve, reject) => {
+    if (isPositiveAnswer) {
+      resolve('Hooray!!! She said "Yes"!');
+    } else if (isPositiveAnswer === false) {
+      resolve('Oh no, she said "No".');
+    } else {
+      reject(Error('Wrong parameter is passed! Ask her again.'));
+    }
+  });
+
+  return promise;
 }
 
 
@@ -38,7 +48,7 @@ function willYouMarryMe(/* isPositiveAnswer */) {
  * Function receive an array of Promise objects.
  *
  * @param {Promise[]} array
- * @return {Promise}
+ *  {Promise}
  *
  * @example
  *    const promises = [Promise.resolve(1), Promise.resolve(3), Promise.resolve(12)]
@@ -48,8 +58,8 @@ function willYouMarryMe(/* isPositiveAnswer */) {
  *    })
  *
  */
-function processAllPromises(/* array */) {
-  throw new Error('Not implemented');
+function processAllPromises(array) {
+  return Promise.all(array);
 }
 
 /**
@@ -58,7 +68,7 @@ function processAllPromises(/* array */) {
  * Function receive an array of Promise objects.
  *
  * @param {Promise[]} array
- * @return {Promise}
+ *  {Promise}
  *
  * @example
  *    const promises = [
@@ -71,8 +81,8 @@ function processAllPromises(/* array */) {
  *    })
  *
  */
-function getFastestPromise(/* array */) {
-  throw new Error('Not implemented');
+function getFastestPromise(array) {
+  return Promise.race(array);
 }
 
 /**
@@ -82,7 +92,7 @@ function getFastestPromise(/* array */) {
  *
  * @param {Promise[]} array
  * @param {Function} action
- * @return {Promise}
+ *  {Promise}
  *
  * @example
  *    const promises = [Promise.resolve(1), Promise.resolve(2), Promise.resolve(3)];
@@ -92,8 +102,17 @@ function getFastestPromise(/* array */) {
  *    });
  *
  */
-function chainPromises(/* array, action */) {
-  throw new Error('Not implemented');
+function chainPromises(array, action) {
+  const promise = new Promise((promises) => {
+    const arr = [];
+    array.forEach((p) => {
+      p.then((res) => {
+        arr.push(res);
+      }).catch(Error('Error'));
+    });
+    promises(arr);
+  }).then((arr) => arr.reduce(action));
+  return promise;
 }
 
 module.exports = {
